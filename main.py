@@ -8,6 +8,7 @@ arquivo = open(nomeArquivo, 'r')
 # variáveis
 populacaoInicial = []
 matrizPopulacao = []
+rotaInicial = []
 # pega o número de cidades
 n_linhas = int(arquivo.readline().rstrip())
 print(n_linhas)
@@ -43,5 +44,12 @@ for i in range(n_linhas):
         print("", end='')
     else:
         print()
+print("]")
+# Rota inicial
+for i in range(1, int(n_linhas+2)):
+    if(i == n_linhas+1):
+        rotaInicial.append(i-n_linhas)
+    else:
+        rotaInicial.append(i)
 
-print("]", end='')
+print(rotaInicial)
