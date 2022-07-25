@@ -73,11 +73,13 @@ for i in range(1, int(n_linhas+2)):
     populacaoInicial.append(rotaInicial)
     cont += 1
 
-print(populacaoInicial)
+# print(populacaoInicial)
 
 # chama a função de fazer as trocas de cidade
 possibilidades = []
-possibilidades = makeRote(populacaoInicial, n_linhas, matrizPopulacao)
-
+possibilidades, quantidadeRotas = makeRote(
+    populacaoInicial, n_linhas, matrizPopulacao)
+#print(possibilidades, quantidadeRotas)
+print("----------------------------------------------------------------------")
 # Função calculo de distância
-print(calcRota(possibilidades, matrizPopulacao, n_linhas))
+print(calcRota(possibilidades, matrizPopulacao, n_linhas, quantidadeRotas))
