@@ -17,15 +17,12 @@ def calcRota(rotas_p, Mat_dist, N, nRotas):
         for j in range(index-1):      # Laco criado para navegar entre as cidades das rotas
             x = rotas_p[i]['Caminho'][j]['PosicaoMatriz']
             y = rotas_p[i]['Caminho'][j+1]['PosicaoMatriz']
-            print("x", x)
-            print("y", y)
             soma += Mat_dist[x][y]
-            print(soma)
 
-            # Encontra a melhor rota
-            if(soma < eh_melhor['Dist']):
-                eh_melhor['Dist'] = soma
-                eh_melhor['rote'] = rotas_p[i]
-                eh_melhor['X'] = x
-                eh_melhor['Y'] = y
+        # Encontra a melhor rota
+        if(soma < eh_melhor['Dist']):
+            eh_melhor['Dist'] = soma
+            eh_melhor['rote'] = rotas_p[i]
+            eh_melhor['X'] = x
+            eh_melhor['Y'] = y
     return eh_melhor

@@ -80,6 +80,6 @@ possibilidades = []
 possibilidades, quantidadeRotas = makeRote(
     populacaoInicial, n_linhas, matrizPopulacao)
 #print(possibilidades, quantidadeRotas)
-print("----------------------------------------------------------------------")
+print("-----------------------------MELHOR DISTÂNCIA-----------------------------------------")
 # Função calculo de distância
 print(calcRota(possibilidades, matrizPopulacao, n_linhas, quantidadeRotas))
