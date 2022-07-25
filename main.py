@@ -1,28 +1,27 @@
 # Bibliotecas
 import sys
-from tracemalloc import start
-
+from rotas import makeRote
+from psd_calc import calcRota
 # Abrindo Arquivo
 nomeArquivo = sys.argv[1]
 arquivo = open(nomeArquivo, 'r')
 
 # variáveis
-populacaoInicial = []
 matrizAux = []
+populacaoInicial = []
 matrizPopulacao = []
 rotaInicial = []
 
 # pega o número de cidades
 n_linhas = int(arquivo.readline().rstrip())
 print(n_linhas)
-for linha in arquivo:
-    # Dicionário
-    vet = {'km - Inicial': 0.0, 'conteudo': 0.0, 'km - Final': 0.0}
-    linha = linha.split(' ')
-    vet['conteudo'] = linha
-    populacaoInicial.append(vet)
 
-   # Matriz Aux
+index = 0
+for linha in arquivo:
+    linha = str.strip(linha)
+    linha = linha.split(' ')
+
+# Matriz Aux
     for i in range(int(n_linhas)):
         # cria a linha i
         linhaM = []  # linha da matriz auxiliar
@@ -34,7 +33,6 @@ for linha in arquivo:
     # coloque linha na matriz
     matrizAux.append(linhaM)
     matrizPopulacao.append(linhaMP)  # criando a matriz oficial
-
 # fim do arquivo
 arquivo.close()
 
@@ -49,7 +47,6 @@ for i in range(n_linhas):
 
 
 # print de teste
-print(populacaoInicial)
 print("=====================MATRIZ===============================")
 print("[", end='')
 for i in range(n_linhas):
@@ -63,11 +60,24 @@ for i in range(n_linhas):
         print()
 print("]")
 
-# Rota inicial
+# Rota inicial e População Inicial
+cont = 0
 for i in range(1, int(n_linhas+2)):
+    rotaInicial = {'cidade': 0, 'PosicaoMatriz': 0}
     if(i == n_linhas+1):
-        rotaInicial.append(i-n_linhas)
+        rotaInicial['cidade'] = (i-n_linhas)
+        rotaInicial['PosicaoMatriz'] = 0
     else:
-        rotaInicial.append(i)
+        rotaInicial['cidade'] = i
+        rotaInicial['PosicaoMatriz'] = cont
+    populacaoInicial.append(rotaInicial)
+    cont += 1
 
-print(rotaInicial)
+print(populacaoInicial)
+
+# chama a função de fazer as trocas de cidade
+possibilidades = []
+possibilidades = makeRote(populacaoInicial, n_linhas, matrizPopulacao)
+
+# Função calculo de distância
+print(calcRota(possibilidades, matrizPopulacao, n_linhas))

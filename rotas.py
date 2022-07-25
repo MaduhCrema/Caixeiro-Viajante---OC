@@ -1,29 +1,29 @@
-#Funcao de criar possibilidades 
+# Funcao de criar possibilidades
 def makeRote(rote_i, quant, mat):
-    #Variaveis
+    # Variaveis
     Possibilidades = []
-    Yep = True 
-    Rota = {'Caminho':[],
-            'X':0,
-            'Y':0
+    Yep = True
+    Rota = {'Caminho': [],
+            'X': 0,
+            'Y': 0
             }
 
-    #Verifica se a rota padrao e possivel
-    for k in range(quant-1):
+    # Verifica se a rota padrao e possivel
+    for i in range(quant-1):
         if(i != 0 and i != quant-2):
             x = rote_i[i]
-            x = x['P']
+            x = x['PosicaoMatriz']
             y = rote_i[i+1]
-            y = y['P']
+            y = y['PosicaoMatriz']
             if(mat[x][y] == 0):
                 Yep = False
     if(Yep):
         Rota['Caminho'] = rote_i
         Rota['X'] = 0
         Rota['Y'] = 0
-        Possibilidades.append(Rota)            
-    
-    #Gera todas as combinacoes de de rotas
+        Possibilidades.append(Rota)
+
+    # Gera todas as combinacoes de de rotas
     for i in range(quant-1):
         if(i != 0 and i != quant-2):
             for j in range(quant-1):
@@ -32,15 +32,15 @@ def makeRote(rote_i, quant, mat):
                     rote_i[j] = rote_i[j+1]
                     rote_i[j+1] = aux
                     x = rote_i[j]
-                    x = x['P']
+                    x = x['PosicaoMatriz']
                     y = rote_i[j+1]
-                    y = y['P']
-                    
-                    #Verifica se a rota e possivel
+                    y = y['PosicaoMatriz']
+
+                    # Verifica se a rota e possivel
                     if(mat[x][y] != 0):
                         Rota['Caminho'] = rote_i
                         Rota['X'] = x
                         Rota['Y'] = y
                         Possibilidades.append(Rota)
-                        
+
     return Possibilidades
