@@ -1,18 +1,18 @@
 # Bibliotecas
 import sys
 from rotas import makeRote
-from psd_calc import calcRota
+from calr_first import calcRota
+
 # Abrindo Arquivo
 nomeArquivo = sys.argv[1]
 arquivo = open(nomeArquivo, 'r')
 
-# variáveis
+# Variáveis
 matrizAux = []
-populacaoInicial = []
-matrizPopulacao = []
-rotaInicial = []
+Rota_Inicial = []
+Matriz_Dist = []
 
-# pega o número de cidades
+# Pega o número de cidades
 n_linhas = int(arquivo.readline().rstrip())
 print(n_linhas)
 
@@ -32,8 +32,8 @@ for linha in arquivo:
             linhaMP.append(0)  # criando a matriz oficial
     # coloque linha na matriz
     matrizAux.append(linhaM)
-    matrizPopulacao.append(linhaMP)  # criando a matriz oficial
-# fim do arquivo
+    Matriz_Dist.append(linhaMP)  # criando a matriz oficial
+# Fim do arquivo
 arquivo.close()
 
 # Matriz Oficial
@@ -43,7 +43,7 @@ for i in range(n_linhas):
         a_string = "".join(s)
         res = int(a_string)
 
-        matrizPopulacao[i][j] = res
+        Matriz_Dist[i][j] = res
 
 
 # print de teste
@@ -51,7 +51,7 @@ print("=====================MATRIZ===============================")
 print("[", end='')
 for i in range(n_linhas):
     for j in range(n_linhas):
-        print(matrizPopulacao[i][j], end='')
+        print(Matriz_Dist[i][j], end='')
 
     # formatação do print
     if(i == n_linhas-1):
@@ -60,26 +60,21 @@ for i in range(n_linhas):
         print()
 print("]")
 
-# Rota inicial e População Inicial
-cont = 0
-for i in range(1, int(n_linhas+2)):
-    rotaInicial = {'cidade': 0, 'PosicaoMatriz': 0}
-    if(i == n_linhas+1):
-        rotaInicial['cidade'] = (i-n_linhas)
-        rotaInicial['PosicaoMatriz'] = 0
-    else:
-        rotaInicial['cidade'] = i
-        rotaInicial['PosicaoMatriz'] = cont
-    populacaoInicial.append(rotaInicial)
-    cont += 1
+# Gera a primeira rota
+for i in range(n_linhas):
+    ROTA = {'Cidade': 0, 'PM': 0}       # Dicionario para indicar a cidade e sua posicao
+    if(i == 0 and i == n_linhas):       # Garante que a cidade inicial seja sempre 1 e sua PM 0
+        ROTA['Cidade'] = 1
+        ROTA['PM'] = 0
+    else:                               # Seta os valores das demais cidades
+        ROTA['Cidade'] = i+1
+        ROTA['PM'] = i
+    Rota_Inicial.append(ROTA)
+# Garantindo que a a rota termina na cidade inicial
+ROTA = {'Cidade': 0, 'PM': 0}   # Dicionário criado fora do for
+ROTA['Cidade'] = 1              # Setando os valores manualmente
+ROTA['PM'] = 0                  # Setando os valores manualmente
+Rota_Inicial.append(ROTA)
 
-# print(populacaoInicial)
 
-# chama a função de fazer as trocas de cidade
-possibilidades = []
-possibilidades, quantidadeRotas = makeRote(
-    populacaoInicial, n_linhas, matrizPopulacao)
-#print(possibilidades, quantidadeRotas)
-print("-----------------------------MELHOR DISTÂNCIA-----------------------------------------")
-# Função calculo de distância
-print(calcRota(possibilidades, matrizPopulacao, n_linhas, quantidadeRotas))
+print(Rota_Inicial) # teste
