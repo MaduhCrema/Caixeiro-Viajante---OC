@@ -1,7 +1,7 @@
 # Bibliotecas
 import sys
-from rotas import makeRote
 from calr_first import calcRota
+from rotas import makeRoute
 
 # Abrindo Arquivo
 nomeArquivo = sys.argv[1]
@@ -11,6 +11,7 @@ arquivo = open(nomeArquivo, 'r')
 matrizAux = []
 Rota_Inicial = []
 Matriz_Dist = []
+Teste = []
 
 # Pega o número de cidades
 n_linhas = int(arquivo.readline().rstrip())
@@ -76,5 +77,6 @@ ROTA['Cidade'] = 1              # Setando os valores manualmente
 ROTA['PM'] = 0                  # Setando os valores manualmente
 Rota_Inicial.append(ROTA)
 
+Teste = makeRoute(Rota_Inicial, Matriz_Dist)
 
-print(Rota_Inicial) # teste
+print(Teste)
