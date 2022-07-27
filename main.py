@@ -2,6 +2,7 @@
 import sys
 from calr_first import calcRota
 from rotas import makeRoute
+from rotas import pRoute
 
 # Abrindo Arquivo
 nomeArquivo = sys.argv[1]
@@ -12,6 +13,7 @@ matrizAux = []
 Rota_Inicial = []
 Matriz_Dist = []
 Teste = []
+Teste2 = []
 
 # Pega o número de cidades
 n_linhas = int(arquivo.readline().rstrip())
@@ -58,7 +60,7 @@ for i in range(n_linhas):
         print("", end='')
     else:
         print()
-print()
+print("\n")
 
 # Gera a primeira rota
 for i in range(n_linhas):
@@ -78,5 +80,18 @@ Rota_Inicial.append(ROTA)
 
 Teste = makeRoute(Rota_Inicial)
 
-for i in Teste:
+Teste2 = pRoute(Teste, Matriz_Dist)
+
+cont = 1
+print("Antes da Limpeza")
+for j in Teste:
+    print(cont)
+    print(j, "\n")
+    cont += 1
+
+cont = 1
+print("Depois da Limpeza")
+for i in Teste2:
+    print(cont)
     print(i, "\n")
+    cont += 1
