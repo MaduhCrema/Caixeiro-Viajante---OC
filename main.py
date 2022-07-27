@@ -49,17 +49,16 @@ for i in range(n_linhas):
 
 # print de teste
 print("=====================MATRIZ===============================")
-print("[", end='')
 for i in range(n_linhas):
     for j in range(n_linhas):
-        print(Matriz_Dist[i][j], end='')
+        print(Matriz_Dist[i][j], " ", end='')
 
     # formatação do print
     if(i == n_linhas-1):
         print("", end='')
     else:
         print()
-print("]")
+print()
 
 # Gera a primeira rota
 for i in range(n_linhas):
@@ -77,6 +76,7 @@ ROTA['Cidade'] = 1              # Setando os valores manualmente
 ROTA['PM'] = 0                  # Setando os valores manualmente
 Rota_Inicial.append(ROTA)
 
-Teste = makeRoute(Rota_Inicial, Matriz_Dist)
+Teste = makeRoute(Rota_Inicial)
 
-print(Teste)
+for i in Teste:
+    print(i, "\n")
