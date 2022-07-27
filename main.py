@@ -1,6 +1,7 @@
 # Bibliotecas
+from os import PRIO_PGRP
 import sys
-from calr_first import calcRota
+from distance import calcRota
 from rotas import makeRoute
 from rotas import pRoute
 
@@ -10,14 +11,17 @@ arquivo = open(nomeArquivo, 'r')
 
 # Variáveis
 matrizAux = []
-Rota_Inicial = []
-Matriz_Dist = []
-Teste = []
-Teste2 = []
+Rota_Inicial = []           # Caso inicial
+Matriz_Dist = []            # Lista com as adjacencias do grafo
+Rotas = []                  # Lista com todas as rotas possiveis
+Melhor = []                 # Lista com as melhores rotas em cada interacao
+
+# ---------------------------------------
+# Le as informacoes de entrada do arquivo
+# ---------------------------------------
 
 # Pega o número de cidades
 n_linhas = int(arquivo.readline().rstrip())
-print(n_linhas)
 
 index = 0
 for linha in arquivo:
@@ -39,6 +43,10 @@ for linha in arquivo:
 # Fim do arquivo
 arquivo.close()
 
+# ----------------------------
+# Cria a matriz de adjacencias
+# ----------------------------
+
 # Matriz Oficial
 for i in range(n_linhas):
     for j in range(n_linhas):
@@ -48,19 +56,9 @@ for i in range(n_linhas):
 
         Matriz_Dist[i][j] = res
 
-
-# print de teste
-print("=====================MATRIZ===============================")
-for i in range(n_linhas):
-    for j in range(n_linhas):
-        print(Matriz_Dist[i][j], " ", end='')
-
-    # formatação do print
-    if(i == n_linhas-1):
-        print("", end='')
-    else:
-        print()
-print("\n")
+# ----------------
+# Cria o cado base
+# ----------------
 
 # Gera a primeira rota
 for i in range(n_linhas):
@@ -78,20 +76,15 @@ ROTA['Cidade'] = 1              # Setando os valores manualmente
 ROTA['PM'] = 0                  # Setando os valores manualmente
 Rota_Inicial.append(ROTA)
 
-Teste = makeRoute(Rota_Inicial)
+# ----------------------------------------
+# 1° Interacao - Tabela Tabu Nao Utilizada
+# ----------------------------------------
 
-Teste2 = pRoute(Teste, Matriz_Dist)
+# Cria as possiveis rotas do grafo
+Rotas = makeRoute(Rota_Inicial)
 
-cont = 1
-print("Antes da Limpeza")
-for j in Teste:
-    print(cont)
-    print(j, "\n")
-    cont += 1
+# Verifica a existencia das rotas
+Rotas = pRoute(Rotas, Matriz_Dist)
 
-cont = 1
-print("Depois da Limpeza")
-for i in Teste2:
-    print(cont)
-    print(i, "\n")
-    cont += 1
+# Obetem a melhor rota
+calcRota(Rotas, Matriz_Dist)

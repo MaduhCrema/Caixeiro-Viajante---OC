@@ -30,22 +30,23 @@ def makeRoute(Vet):
 # Funcao para verificar se a rota existe
 def pRoute(Rota, Mat):
     # Decalracao de Variaveis
-    Routes = []
-    Flag = 0
+    Routes = []                                 # Lista com as rotas possiveis
+    Flag = 0                                    # Flag para indicar se a rota é possivel
 
+    # Realiza a verificacao
     for i in Rota:
-        Flag = 0
-        print("-----Caminho-----")
+        Flag = 0                                # Garante que a flag sempre vai ser resetada a cada nova rota
         Raux = i['Caminho'].copy()
         l = len(Raux)
-        for j in range(l-1):
+        # Navega por cada cidade veficando conexao com a seguinte
+        for j in range(l-1):                    
             x = Raux[j]['PM']
             y = Raux[j+1]['PM']
-            if(Mat[x][y] == 0):
-                print("Posicao", x, y)
-                print("Foi\n")
+            # Caso a rota nao exista levanta a flag
+            if(Mat[x][y] == 0):                 
                 Flag = 1
-        if(Flag == 0):
+        # Caso a flag estaja abixada passa a rota para lista de rotas
+        if(Flag == 0):                          
             Routes.append(i)
     
     return Routes
