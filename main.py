@@ -15,6 +15,7 @@ Rota_Inicial = []           # Caso inicial
 Matriz_Dist = []            # Lista com as adjacencias do grafo
 Rotas = []                  # Lista com todas as rotas possiveis
 Melhor = []                 # Lista com as melhores rotas em cada interacao
+Tabu = []                   # Matriz com os tabus de cada cidade
 
 # ---------------------------------------
 # Le as informacoes de entrada do arquivo
@@ -56,8 +57,19 @@ for i in range(n_linhas):
 
         Matriz_Dist[i][j] = res
 
+# ------------------
+# Cria a Tabela Tabu
+# ------------------
+
+# Tabela Tabu
+for i in range(n_linhas):
+    linhaT = []
+    for j in range(n_linhas):
+        linhaT.append(0)                # Inicializa a tabela como sendo 0 em todos os casos
+    Tabu.append(linhaT)
+
 # ----------------
-# Cria o cado base
+# Cria o caso base
 # ----------------
 
 # Gera a primeira rota
@@ -77,7 +89,7 @@ ROTA['PM'] = 0                  # Setando os valores manualmente
 Rota_Inicial.append(ROTA)
 
 # ----------------------------------------
-# 1° Interacao - Tabela Tabu Nao Utilizada
+# 0° Interacao - Tabela Tabu Nao Utilizada
 # ----------------------------------------
 
 # Cria as possiveis rotas do grafo
@@ -89,4 +101,26 @@ Rotas = pRoute(Rotas, Matriz_Dist)
 # Obetem a melhor rota
 Melhor.append(calcRota(Rotas, Matriz_Dist))
 
-print(Melhor[0])
+# Atualiza a tabela Tabu
+x = Melhor[0]['X']
+y = Melhor[0]['Y']
+
+if(x > y):                      # Condicional para ajustar as cordenadas do Tabu
+    aux = x
+    x = y
+    y = aux
+Tabu[x][y] = 3                  # Atualiza o Tabu
+Tabu[y][x] += 1                 # Atualiza a frequencia
+
+#Saida para o usuário
+print("---------- Interação N°0 ----------\n")
+Ca = []
+aux = len(Melhor[0]['Rota'])
+for i in range(aux):
+    Ca.append(Melhor[0]['Rota'][i]['Cidade'])
+print("Caminho: ", Ca)
+print("Distância: ", Melhor[0]['Tam'])
+print("Tabu:")
+for i in Tabu:
+    print(i)
+print()
