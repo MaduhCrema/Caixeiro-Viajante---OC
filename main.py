@@ -87,4 +87,6 @@ Rotas = makeRoute(Rota_Inicial)
 Rotas = pRoute(Rotas, Matriz_Dist)
 
 # Obetem a melhor rota
-calcRota(Rotas, Matriz_Dist)
+Melhor.append(calcRota(Rotas, Matriz_Dist))
+
+print(Melhor[0])
