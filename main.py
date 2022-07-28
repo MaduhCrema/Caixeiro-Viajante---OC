@@ -4,6 +4,7 @@ import sys
 from distance import calcRota
 from rotas import makeRoute
 from rotas import pRoute
+from rotas import tabRoute
 
 # Abrindo Arquivo
 nomeArquivo = sys.argv[1]
@@ -124,3 +125,11 @@ print("Tabu:")
 for i in Tabu:
     print(i)
 print()
+
+testes = Melhor[0]
+tabRoute(testes, Tabu)
+# ----------------------------------------------
+# Demains N Interacaoes - Utilizando Tabela Tabu
+# ----------------------------------------------
+# vet_d = 1
+# while(i <= 15):

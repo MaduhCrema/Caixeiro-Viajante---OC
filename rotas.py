@@ -4,7 +4,6 @@ def makeRoute(Vet):
     n = len(Vet)
     Route = {'Caminho': [], 'X': 0, 'Y': 0}
     Possibilidades = []
-    cont = 1
      
     # Geraca da possiblidades
     for i in range(1, n-1):                         # Laco para navegar na posicao a ser variada
@@ -23,7 +22,6 @@ def makeRoute(Vet):
             Route['X'] = aux
             Route['Y'] = j
             Possibilidades.append(Route)
-            cont += 1
 
     return Possibilidades
 
@@ -36,7 +34,7 @@ def pRoute(Rota, Mat):
     # Realiza a verificacao
     for i in Rota:
         Flag = 0                                # Garante que a flag sempre vai ser resetada a cada nova rota
-        Raux = i['Caminho'].copy()
+        Raux = i['Caminho'].copy()              # Pega a rota a ser analizada
         l = len(Raux)
         # Navega por cada cidade veficando conexao com a seguinte
         for j in range(l-1):                    
@@ -50,3 +48,50 @@ def pRoute(Rota, Mat):
             Routes.append(i)
     
     return Routes
+
+def tabRoute(Rota, MatT):
+    # Variaveis 
+    Routes = []                             # Lista das Possíveis Rotas
+    Tab_R = []                              # Lista das Rotas Tabu
+    var1 = Rota['Rota']
+    n = len(Rota['Rota'])
+
+    # Geracao das rotas
+    for i in range(1, n-1):
+        Raux = var1.copy()
+        aux = i   
+        # Laço para deslocar o valor para a direita
+        for j in range(i+1, n-1):
+            # Realiza a troca de cidades
+            aux2 = Raux[i]
+            Raux[i] = Raux[j]
+            Raux[j] = aux2
+            # Ajusta a posicao da matriz
+            print(i, j)
+            if(i > j):
+                aux3 = i
+                i = j
+                j = aux3
+            # Confere se a rota não esta no TABU
+            if(MatT[i][j] == 0):
+                Route = {'Caminho': [], 'X': 0, 'Y': 0}
+                Route['Caminho'] = Raux.copy()
+                Route['X'] = aux
+                Route['Y'] = j
+                Routes.append(Route)
+            else:
+                Route = {'Caminho': [], 'X': 0, 'Y': 0}
+                Route['Caminho'] = Raux.copy()
+                Route['X'] = aux
+                Route['Y'] = j
+                Tab_R.append(Route)
+
+    
+
+    print("Com Tabu")
+    for i in Routes:
+         print(i)
+
+    print("\nS/ Tabu")
+    for i in Tab_R:
+        print(i)
