@@ -99,6 +99,8 @@ Rotas = makeRoute(Rota_Inicial)
 # Verifica a existencia das rotas
 Rotas = pRoute(Rotas, Matriz_Dist)
 
+print("\n Depois \n")
+
 # Obetem a melhor rota
 Melhor.append(calcRota(Rotas, Matriz_Dist))
 
@@ -116,9 +118,9 @@ Tabu[y][x] += 1                 # Atualiza a frequencia
 #Saida para o usuário
 print("---------- Interação N°0 ----------\n")
 Ca = []
-aux = len(Melhor[0]['Rota'])
+aux = len(Melhor[0]['Caminho'])
 for i in range(aux):
-    Ca.append(Melhor[0]['Rota'][i]['Cidade'])
+    Ca.append(Melhor[0]['Caminho'][i]['Cidade'])
 print("Caminho: ", Ca)
 print("Distância: ", Melhor[0]['Tam'])
 print("Tabu:")
@@ -126,10 +128,35 @@ for i in Tabu:
     print(i)
 print()
 
-testes = Melhor[0]
-tabRoute(testes, Tabu)
+extra = Melhor[0].copy()
 # ----------------------------------------------
 # Demains N Interacaoes - Utilizando Tabela Tabu
 # ----------------------------------------------
-# vet_d = 1
-# while(i <= 15):
+i_interacao = 0
+z = 1
+while(i_interacao <= 20):
+    
+    # Criando as n interacoles
+    Melhor[0] = tabRoute(Melhor[0], Tabu, Matriz_Dist)
+    
+    # Print
+    print("---------- Interação N°", z, "----------\n")
+    Ca = []
+    aux = len(Melhor[0]['Caminho'])
+    for i in range(aux):
+        Ca.append(Melhor[0]['Caminho'][i]['Cidade'])
+    print("Caminho: ", Ca)
+    print("Distância: ", Melhor[0]['Tam'])
+    print("Tabu:")
+    for i in Tabu:
+        print(i)
+    print()
+
+    z += 1
+
+    # Parada
+    if(Melhor[0] == extra):
+        i_interacao += 1
+    else:
+        i_interacao = 0
+        extra = Melhor[0].copy()
