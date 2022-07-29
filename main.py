@@ -1,5 +1,4 @@
 # Bibliotecas
-from os import PRIO_PGRP
 import sys
 from distance import calcRota
 from rotas import makeRoute
@@ -69,7 +68,8 @@ print(Matriz_Dist)
 for i in range(n_linhas):
     linhaT = []
     for j in range(n_linhas):
-        linhaT.append(0)                # Inicializa a tabela como sendo 0 em todos os casos
+        # Inicializa a tabela como sendo 0 em todos os casos
+        linhaT.append(0)
     Tabu.append(linhaT)
 
 # ----------------
@@ -78,7 +78,8 @@ for i in range(n_linhas):
 
 # Gera a primeira rota
 for i in range(n_linhas):
-    ROTA = {'Cidade': 0, 'PM': 0}       # Dicionario para indicar a cidade e sua posicao
+    # Dicionario para indicar a cidade e sua posicao
+    ROTA = {'Cidade': 0, 'PM': 0}
     if(i == 0 and i == n_linhas):       # Garante que a cidade inicial seja sempre 1 e sua PM 0
         ROTA['Cidade'] = 1
         ROTA['PM'] = 0
@@ -118,7 +119,7 @@ if(x > y):                      # Condicional para ajustar as cordenadas do Tabu
 Tabu[x][y] = 3                  # Atualiza o Tabu
 Tabu[y][x] += 1                 # Atualiza a frequencia
 
-#Saida para o usuário
+# Saida para o usuário
 print("---------- Interação N°0 ----------\n")
 Ca = []
 aux = len(Melhor[0]['Caminho'])
@@ -138,7 +139,7 @@ extra = Melhor[0].copy()
 i_interacao = 0
 z = 1
 while(i_interacao <= 20):
-    
+
     # Criando as n interacoles
     Melhor[0] = tabRoute(Melhor[0], Tabu, Matriz_Dist)
 
@@ -152,7 +153,7 @@ while(i_interacao <= 20):
         y = aux
     Tabu[x][y] = 3                  # Atualiza o Tabu
     Tabu[y][x] += 1                 # Atualiza a frequencia
-    
+
     # Print
     print("---------- Interação N°", z, "----------\n")
     Ca = []
@@ -183,7 +184,7 @@ print("DADOS", dados)
 # plotagem de gráfico
 plt.plot(range(len(dados)), dados)
 plt.grid(True, zorder=0)
-plt.title("Elitismo do fitness")
-plt.xlabel("Quantidade de Fitness")
-plt.ylabel("Valor do fitness")
+plt.title("Dados com as melhores distâncias")
+plt.xlabel("N° Interações")
+plt.ylabel("Valor do distância")
 plt.show()
