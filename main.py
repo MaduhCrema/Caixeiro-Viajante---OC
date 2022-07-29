@@ -5,6 +5,7 @@ from distance import calcRota
 from rotas import makeRoute
 from rotas import pRoute
 from rotas import tabRoute
+from matplotlib import pyplot as plt
 
 # Abrindo Arquivo
 nomeArquivo = sys.argv[1]
@@ -178,3 +179,11 @@ while(i_interacao <= 20):
         extra = Melhor[0].copy()
 
 print("DADOS", dados)
+
+# plotagem de gráfico
+plt.plot(range(len(dados)), dados)
+plt.grid(True, zorder=0)
+plt.title("Elitismo do fitness")
+plt.xlabel("Quantidade de Fitness")
+plt.ylabel("Valor do fitness")
+plt.show()
