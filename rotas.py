@@ -1,6 +1,20 @@
 # Funcao geradora de rotas iniciais
 from distance import calcRotaT
 
+def tryagain(Vet):
+    n = len(Vet)
+    # Geraca da possiblidades
+    for i in range(1, n-1):                         # Laco para navegar na posicao a ser variada
+        Vaux = Vet.copy()                           # Cria uma copia do Vetor para realizar a troca
+        aux = i
+        # Laço para deslocar o valor para a direita
+        for j in range(i+1, n-1):      
+            # Realiza a troca de cidades
+            aux2 = Vaux[i]
+            Vaux[i] = Vaux[j]
+            Vaux[j] = aux2
+            i += 1
+    return Vaux
 
 def makeRoute(Vet):
     # Declaracao das variaveis
@@ -45,9 +59,8 @@ def tabRoute(Rota, MatT, MatD):
             aux2 = Vaux[i]
             Vaux[i] = Vaux[j]
             Vaux[j] = aux2
-            
-            # Encontra o Melhor
             i += 1
+            # Encontra o Melhor
             y = j
             if(x > y):
                 aux = x
@@ -73,8 +86,6 @@ def tabRoute(Rota, MatT, MatD):
                     M = a1
             if(a2 == 0 and a1 !=0):
                 M = a1
-
-            print("O melhor: ",M, "\n")
     return M
 
 # Verifico se a rota tabu existe
@@ -83,11 +94,14 @@ def pRouteT(Rota, Mat):
     l = len(Rota)
 
     for i in range(l-1):
+        Flag = 0
         x = Rota[i]['PM']
         y = Rota[i+1]['PM']
 
         if(Mat[x][y] == 0):
             Flag = 1
+        else:
+            Flag = 0
     
     return Flag
 
@@ -107,11 +121,14 @@ def pRoute(Rota, Mat):
             x = Raux[j]['PM']
             y = Raux[j+1]['PM']
             # Caso a rota nao exista levanta a flag
-            if(Mat[x][y] == 0):                 
-                Flag = 1
+
+            if(Mat[x][y] == 0):
+                Raux = tryagain(Raux)
+                Flag = pRouteT(Raux, Mat)               
+                
         # Caso a flag estaja abixada passa a rota para lista de rotas
-        print(Flag)
         if(Flag == 0):                      
             Routes.append(i)
 
     return Routes  
+

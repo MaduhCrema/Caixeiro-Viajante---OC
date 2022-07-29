@@ -17,6 +17,7 @@ Matriz_Dist = []            # Lista com as adjacencias do grafo
 Rotas = []                  # Lista com todas as rotas possiveis
 Melhor = []                 # Lista com as melhores rotas em cada interacao
 Tabu = []                   # Matriz com os tabus de cada cidade
+dados = []                  # Vetor parar mostrar os melhores valores entre as interacoes
 
 # ---------------------------------------
 # Le as informacoes de entrada do arquivo
@@ -58,6 +59,7 @@ for i in range(n_linhas):
 
         Matriz_Dist[i][j] = res
 
+print(Matriz_Dist)
 # ------------------
 # Cria a Tabela Tabu
 # ------------------
@@ -138,6 +140,17 @@ while(i_interacao <= 20):
     
     # Criando as n interacoles
     Melhor[0] = tabRoute(Melhor[0], Tabu, Matriz_Dist)
+
+    # Atualiza a tabela Tabu
+    x = Melhor[0]['X']
+    y = Melhor[0]['Y']
+
+    if(x > y):                      # Condicional para ajustar as cordenadas do Tabu
+        aux = x
+        x = y
+        y = aux
+    Tabu[x][y] = 3                  # Atualiza o Tabu
+    Tabu[y][x] += 1                 # Atualiza a frequencia
     
     # Print
     print("---------- Interação N°", z, "----------\n")
@@ -154,9 +167,14 @@ while(i_interacao <= 20):
 
     z += 1
 
+    # Dados grafico
+    dados.append(Melhor[0]['Tam'])
+
     # Parada
     if(Melhor[0] == extra):
         i_interacao += 1
     else:
         i_interacao = 0
         extra = Melhor[0].copy()
+
+print("DADOS", dados)

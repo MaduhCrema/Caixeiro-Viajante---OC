@@ -36,7 +36,6 @@ def calcRotaT(R, Mat, X, Y):
         x = R[i]['PM']
         y = R[i+1]['PM']
         soma += Mat[x][y]                  # Obtem a distancia entre duas cidades
-    print("Soma = ", soma, "Eh_melhor = ", Eh_melhor['Tam'])
     # Salva a melhor rota
     if(soma < Eh_melhor['Tam']):           # Confre se o novo valor é o melhor
         Eh_melhor['Caminho'] = R
